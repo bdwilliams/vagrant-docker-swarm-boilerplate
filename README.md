@@ -7,3 +7,8 @@ This is a simple (single-node) example of setting up a Docker Swarm environment 
 	git clone git@github.com:bdwilliams/vagrant-docker-swarm-compose-consul-registrator.git
 	cd vagrant-docker-swarm-compose-consul-registrator
 	vagrant up
+
+## TODO
+
+* Multiple Nodes
+* Better Example app
