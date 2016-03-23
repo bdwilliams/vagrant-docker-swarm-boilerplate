@@ -1,0 +1,9 @@
+version: "2"
+
+services:
+  swarm_node3:
+    image: swarm
+    container_name: swarm_node3
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    command: join --advertise 172.17.8.103:2376 consul://172.17.8.101:8500

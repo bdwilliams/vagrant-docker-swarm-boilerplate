@@ -1,0 +1,11 @@
+version: "2"
+
+services:
+  consul:
+    command: -server -client 0.0.0.0 -bootstrap --data-dir /var/consul -ui
+    image: gliderlabs/consul-agent:0.6
+    ports:
+      - 8400:8400
+      - 8500:8500
+      - 8600:53/udp
+      - 172.17.8.101:53:53/udp
