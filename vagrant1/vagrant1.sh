@@ -1,7 +1,16 @@
 #!/bin/bash
+set -x
+
+# run weave
+weave launch --init-peer-count 3
+
+# install weave scope
+sudo wget -O /usr/local/bin/scope https://git.io/scope
+sudo chmod a+x /usr/local/bin/scope
+sudo scope launch
 
 # run docker-compose for consul
-docker-compose -f /vagrant/docker-compose-consul.yml up -d
+docker-compose -f /vagrant/vagrant1/docker-compose-consul.yml up -d --timeout 20
 
 # wait for the consul container (port 8500)
 COUNTER=0
@@ -33,6 +42,3 @@ done
 
 # remove temp network
 docker network rm temp
-
-# run docker-compose
-docker-compose -f /vagrant/docker-compose-vagrant1.yml up -d --timeout 20

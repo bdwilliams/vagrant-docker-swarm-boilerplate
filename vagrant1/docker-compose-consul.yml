@@ -1,0 +1,37 @@
+version: "2"
+
+services:
+  consul:
+    command: -server -client 0.0.0.0 -bootstrap --data-dir /var/consul -ui
+    image: gliderlabs/consul-agent:0.6
+    ports:
+      - 8400:8400
+      - 8500:8500
+      - 8600:53/udp
+      - 172.17.8.101:53:53/udp
+  registrator:  
+    command: -ip=172.17.8.101 consul://172.17.8.101:8500
+    image: gliderlabs/registrator:latest
+    restart: always
+    links:
+      - consul
+    volumes:
+      - "/var/run/docker.sock:/tmp/docker.sock"
+  swarm_master:
+    image: swarm
+    container_name: swarm_master
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    ports:
+      - "2375:4000"
+    restart: always
+    command: manage -H 0.0.0.0:4000 --replication --replication-ttl "4s" --advertise 172.17.8.101:4000 consul://172.17.8.101:8500
+  swarm_node1:
+    image: swarm
+    container_name: swarm_node1
+    links:
+      - swarm_master
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    restart: always
+    command: join --advertise 172.17.8.101:2376 consul://172.17.8.101:8500
