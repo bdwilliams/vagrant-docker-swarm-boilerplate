@@ -8,6 +8,7 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock
     ports:
       - "2375:4000"
+    restart: always
     command: manage -H 0.0.0.0:4000 --replication --replication-ttl "4s" --advertise 172.17.8.101:4000 consul://172.17.8.101:8500
   swarm_node1:
     image: swarm
@@ -16,9 +17,11 @@ services:
       - swarm_master
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
+    restart: always
     command: join --advertise 172.17.8.101:2376 consul://172.17.8.101:8500
   registrator:  
     command:  -ip=172.17.8.101 consul://172.17.8.101:8500
     image: gliderlabs/registrator:latest
+    restart: always
     volumes:
       - "/var/run/docker.sock:/tmp/docker.sock"

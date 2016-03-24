@@ -1,7 +1,8 @@
 #!/bin/bash
+set -x
 
 # run docker-compose for consul
-docker-compose -f /vagrant/docker-compose-consul.yml up -d
+docker-compose -f /vagrant/vagrant1/docker-compose-consul.yml up -d
 
 # wait for the consul container (port 8500)
 COUNTER=0
@@ -35,4 +36,5 @@ done
 docker network rm temp
 
 # run docker-compose
-docker-compose -f /vagrant/docker-compose-vagrant1.yml up -d --timeout 20
+export DOCKER_HOST=tcp://172.17.8.101:2376 # docker
+docker-compose -f /vagrant/vagrant1/docker-compose-vagrant1.yml up -d --timeout 20

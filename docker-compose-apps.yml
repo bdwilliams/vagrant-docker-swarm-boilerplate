@@ -1,0 +1,21 @@
+version: "2"
+
+services:
+  lb:
+    scale: 3
+    image: hanzel/load-balancing-swarm
+    container_name: lb
+    ports:
+      - "80:80"
+    environment:
+      - APP_NAME=nginx_web
+      - CONSUL_URL=${KV_IP}:8500
+    depends_on:
+      - web
+  web:
+    scale: 10
+    image: nginx:stable-alpine
+    restart: always
+    ports:
+      - "80"
+      - "443"

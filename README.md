@@ -1,18 +1,28 @@
-# Vagrant + Docker + Swarm + Compose + Consul + Registrator
+# Vagrant + Docker + Swarm + Compose + Consul + Registrator + REX-Ray
 
-Host machine is running Ubuntu 14.04
+Host machine is running a packer built version of Ubuntu 14.04 where the virtualbox SATA controller defaults to 30 portcount
+
+## Requires
+
+VirtualBox 5.0.10+
 
 ## Getting Started
 
-1.) Clone this project and vagrant up
+1.) Start the Virtualbox Media Library (in a different terminal window)
 
 <pre>
-git clone git@github.com:bdwilliams/vagrant-docker-swarm-compose-consul-registrator.git
-cd vagrant-docker-swarm-compose-consul-registrator
+/Applications/VirtualBox.app/Contents/MacOS/vboxwebsrv -H 0.0.0.0 -v
+</pre>
+
+2.) Clone this project and vagrant up
+
+<pre>
+git clone git@github.com:bdwilliams/vagrant-docker-swarm-boilerplate.git
+cd vagrant-docker-swarm-boilerplate
 vagrant up
 </pre>
 
-2.) Make sure that the following hosts exist in your /etc/hosts file
+3.) Make sure that the following hosts exist in your /etc/hosts file
 
 <pre>
 172.17.8.101	vagrant1 vagrant1.vm
@@ -20,7 +30,7 @@ vagrant up
 172.17.8.103	vagrant3 vagrant3.vm
 </pre>
 
-3.) After vagrant is finished, you you verify that everything was successful
+4.) After vagrant is finished, you you verify that everything was successful
 
 <pre>
 vagrant ssh vagrant1 -c 'docker -H tcp://172.17.8.101:2375 info'
@@ -76,7 +86,10 @@ Name: 32bca38d2ec5
 Connection to 127.0.0.1 closed.
 </pre>
 
-## TODO
+5.) Check the Consul UI at http://172.17.8.101:8500/ui
 
-Share volume support  
+6.) Nginx Welcome page at http://172.17.8.101
+
+## TODO
+Consul Templates
 SSL/TLS certificates for Docker
