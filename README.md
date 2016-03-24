@@ -1,14 +1,18 @@
-# Vagrant + Docker + Swarm + Compose + Consul + Registrator
+# Vagrant + Docker + Swarm + Weave + Compose + Consul + Registrator
 
-Host machine is running Ubuntu 14.04
+Host machine is running a packer built version of Ubuntu 14.04 where the virtualbox SATA controller defaults to 30 portcount
+
+## Requires
+
+VirtualBox 5.0.10+
 
 ## Getting Started
 
 1.) Clone this project and vagrant up
 
 <pre>
-git clone git@github.com:bdwilliams/vagrant-docker-swarm-compose-consul-registrator.git
-cd vagrant-docker-swarm-compose-consul-registrator
+git clone git@github.com:bdwilliams/vagrant-docker-swarm-boilerplate.git
+cd vagrant-docker-swarm-boilerplate
 vagrant up
 </pre>
 
@@ -76,7 +80,13 @@ Name: 32bca38d2ec5
 Connection to 127.0.0.1 closed.
 </pre>
 
-## TODO
+4.) Check the Consul UI at http://172.17.8.101:8500/ui
 
-Share volume support  
+5.) Nginx Welcome page at http://172.17.8.101
+
+6.) Weave scope page at http://172.17.8.101:4040
+
+## TODO
+Persistent Volumes
 SSL/TLS certificates for Docker
+Swarm Discovery Token
